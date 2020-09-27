@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.2.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FH.Host.API.Core\FH.Host.API.Core.csproj" />
+    <ProjectReference Include="..\FH.Host.API.Infrastructure\FH.Host.API.Infrastructure.csproj" />
+    <ProjectReference Include="..\FH.Host.API.Model\FH.Host.API.Model.csproj" />
+  </ItemGroup>
+
+</Project>
