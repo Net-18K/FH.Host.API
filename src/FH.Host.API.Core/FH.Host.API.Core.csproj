@@ -5,6 +5,11 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>F:\File\Visual Studio Files\FH.Host.API\src\FH.Host.API.Core\FH.Host.API.Core.xml</DocumentationFile>
+    <NoWarn>1701;1702;1591</NoWarn>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
@@ -14,6 +19,18 @@
   <ItemGroup>
     <ProjectReference Include="..\FH.Host.API.Application\FH.Host.API.Application.csproj" />
     <ProjectReference Include="..\FH.Host.API.Model\FH.Host.API.Model.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="FH.Host.API.Application.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="FH.Host.API.Core.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="FH.Host.API.Model.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>F:\File\Visual Studio Files\FH.Host.API\src\FH.Host.API.Core\FH.Host.API.Application.xml</DocumentationFile>
+    <OutputPath>F:\File\Visual Studio Files\FH.Host.API\src\FH.Host.API.Core\bin\Debug\</OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\FH.Host.API.Infrastructure\FH.Host.API.Infrastructure.csproj" />
     <ProjectReference Include="..\FH.Host.API.Model\FH.Host.API.Model.csproj" />
