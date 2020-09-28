@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using FH.Host.API.Infrastructure.DB;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -43,11 +44,14 @@ namespace FH.Host.API.Core
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // 注册FangHuaHostDbContext为服务
+            services.AddDbContext<FangHuaHostDbContext>();
+
             // 注册Swagger服务，定义1个或者多个Swagger文档
             services.AddSwaggerGen(s =>
             {
                 // 设置Swagger文档相关信息
-                s.SwaggerDoc($"FH.Host.App.API{Version}", new Info
+                s.SwaggerDoc($"FH.Host.App.API_{Version}", new Info
                 {
                     Version = Version,
                     Title = $"{Project_Name} - FH.Host.App.API 默认接口文档",
@@ -60,7 +64,7 @@ namespace FH.Host.API.Core
                     }
                 });
 
-                s.SwaggerDoc($"FH.Host.Admin.API{Version}", new Info
+                s.SwaggerDoc($"FH.Host.Admin.API_{Version}", new Info
                 {
                     Version = Version,
                     Title = $"{Project_Name} - FH.Host.Admin.API 默认接口文档",
@@ -89,7 +93,7 @@ namespace FH.Host.API.Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FangHuaHostDbContext context)
         {
             if (env.IsDevelopment())
             {
@@ -101,6 +105,9 @@ namespace FH.Host.API.Core
                 app.UseHsts();
             }
 
+            // 根据Migrations修改/创建数据库
+            new DbInitializer().InitializeAsync(context);
+
             app.UseHttpsRedirection();
             app.UseMvc();
 
@@ -109,8 +116,8 @@ namespace FH.Host.API.Core
             // 启用Swagger UI中间件（html css js等），定义Swagger Json 入口
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint($"/swagger/FH.Host.App.API{Version}/ swagger.json", $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}");
-                s.SwaggerEndpoint($"/swagger/FH.Host.Admin.API{Version}/ swagger.json", $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}");
+                s.SwaggerEndpoint($"/swagger/FH.Host.App.API_{Version}/swagger.json", $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}");
+                s.SwaggerEndpoint($"/swagger/FH.Host.Admin.API_{Version}/swagger.json", $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}");
                 // 要在应用的根 (http://localhost:&lt;port&gt;/) 处提供 Swagger UI，请将 RoutePrefix 属性设置为空字符串：
                 s.RoutePrefix = string.Empty;
             });

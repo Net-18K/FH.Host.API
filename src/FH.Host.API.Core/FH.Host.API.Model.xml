@@ -4,5 +4,80 @@
         <name>FH.Host.API.Model</name>
     </assembly>
     <members>
+        <member name="T:FH.Host.API.Model.DefaultEntity.FH_Admin">
+            <summary>
+            管理员信息
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.DefaultEntity.FH_Admin.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.DefaultEntity.FH_Admin.AdminName">
+            <summary>
+            管理员账号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.DefaultEntity.FH_Admin.AdminPwd">
+            <summary>
+            管理员密码
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Model.DefaultEntity.FH_Users">
+            <summary>
+            用户信息
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.DefaultEntity.FH_Users.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.DefaultEntity.FH_Users.UserName">
+            <summary>
+            用户账号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.DefaultEntity.FH_Users.UserPwd">
+            <summary>
+            用户密码
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Model.Entity">
+            <summary>
+            默认Entity类
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Entity.IsDeleted">
+            <summary>
+            是否删除 0未删除 1已删除
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Entity.CreateUserID">
+            <summary>
+            创建用户ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Entity.CreateAdminID">
+            <summary>
+            创建管理员ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Entity.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Entity.LastUpdateTime">
+            <summary>
+            最后一次修改时间
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Entity.DeleteTimeAndRemark">
+            <summary>
+            软删除时间于备注
+            </summary>
+        </member>
     </members>
 </doc>
