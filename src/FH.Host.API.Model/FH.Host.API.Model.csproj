@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\FH.Host.API.Infrastructure\FH.Host.API.Infrastructure.csproj" />
+    <Folder Include="Entity\" />
   </ItemGroup>
 
 </Project>
