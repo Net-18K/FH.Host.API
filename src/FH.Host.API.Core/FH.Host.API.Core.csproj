@@ -8,6 +8,12 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="3.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\FH.Host.API.Application\FH.Host.API.Application.csproj" />
+    <ProjectReference Include="..\FH.Host.API.Model\FH.Host.API.Model.csproj" />
   </ItemGroup>
 
 </Project>
