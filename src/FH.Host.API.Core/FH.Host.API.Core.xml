@@ -14,5 +14,10 @@
             项目名称
             </summary>
         </member>
+        <member name="P:FH.Host.API.Core.Startup.Project_Name_English">
+            <summary>
+            项目名称_英文
+            </summary>
+        </member>
     </members>
 </doc>

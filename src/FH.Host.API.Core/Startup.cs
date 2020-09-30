@@ -28,6 +28,11 @@ namespace FH.Host.API.Core
         /// </summary>
         public string Project_Name { get; }
 
+        /// <summary>
+        /// 项目名称_英文
+        /// </summary>
+        public string Project_Name_English { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -35,6 +40,8 @@ namespace FH.Host.API.Core
             // 设置版本号和项目名称
             Version = Configuration["ProjectInfo:Version"];
             Project_Name = Configuration["ProjectInfo:Project_Name"];
+            Project_Name_English = Configuration["ProjectInfo:Project_Name_English"];
+            
         }
 
         public IConfiguration Configuration { get; }
@@ -51,11 +58,12 @@ namespace FH.Host.API.Core
             services.AddSwaggerGen(s =>
             {
                 // 设置Swagger文档相关信息
-                s.SwaggerDoc($"FH.Host.App.API_{Version}", new Info
+                s.SwaggerDoc($"FH.Host.App.API", new Info
                 {
                     Version = Version,
                     Title = $"{Project_Name} - FH.Host.App.API 默认接口文档",
-                    Description = $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}",
+                    Description = $"{Project_Name_English} - FH.Host.App HTTP/HTTPS API _{Version}",
+                    // 服务条款
                     // TermsOfService = "None",
                     License = new License
                     {
@@ -64,11 +72,12 @@ namespace FH.Host.API.Core
                     }
                 });
 
-                s.SwaggerDoc($"FH.Host.Admin.API_{Version}", new Info
+                s.SwaggerDoc($"FH.Host.Admin.API", new Info
                 {
                     Version = Version,
                     Title = $"{Project_Name} - FH.Host.Admin.API 默认接口文档",
-                    Description = $"{Project_Name} - FH.Host.Admin HTTP/HTTPS API {Version}",
+                    Description = $"{Project_Name_English} - FH.Host.Admin HTTP/HTTPS API_{Version}",
+                    // 服务条款
                     // TermsOfService = "None",
                     License = new License
                     {
@@ -116,8 +125,9 @@ namespace FH.Host.API.Core
             // 启用Swagger UI中间件（html css js等），定义Swagger Json 入口
             app.UseSwaggerUI(s =>
             {
-                s.SwaggerEndpoint($"/swagger/FH.Host.App.API_{Version}/swagger.json", $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}");
-                s.SwaggerEndpoint($"/swagger/FH.Host.Admin.API_{Version}/swagger.json", $"{Project_Name} - FH.Host.App HTTP/HTTPS API {Version}");
+                s.SwaggerEndpoint($"/swagger/FH.Host.App.API/swagger.json", $"{Project_Name_English} - FH.Host.App HTTP/HTTPS API");
+                s.SwaggerEndpoint($"/swagger/FH.Host.Admin.API/swagger.json", $"{Project_Name_English} - FH.Host.Admin HTTP/HTTPS API");
+
                 // 要在应用的根 (http://localhost:&lt;port&gt;/) 处提供 Swagger UI，请将 RoutePrefix 属性设置为空字符串：
                 s.RoutePrefix = string.Empty;
             });
