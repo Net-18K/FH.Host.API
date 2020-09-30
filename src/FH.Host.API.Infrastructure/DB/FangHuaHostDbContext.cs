@@ -1,9 +1,6 @@
 ﻿using FH.Host.API.Infrastructure.AppConfigurtaion;
 using FH.Host.API.Model.DefaultEntity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FH.Host.API.Infrastructure.DB
 {

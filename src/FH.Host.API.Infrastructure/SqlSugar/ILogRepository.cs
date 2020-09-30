@@ -1,9 +1,7 @@
 ﻿using FH.Host.API.Model.Model;
 using SqlSugar;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FH.Host.API.Infrastructure.SqlSugar
@@ -54,6 +52,5 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <param name="ignoreColumn">需要排除的列</param>
         /// <returns></returns>
         long InsertReturnLong<T>(T o, params string[] ignoreColumn) where T : class, new();
-
     }
 }

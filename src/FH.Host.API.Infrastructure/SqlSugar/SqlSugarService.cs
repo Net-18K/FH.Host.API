@@ -1,12 +1,9 @@
-﻿
-using Common.Logging;
+﻿using Common.Logging;
 using FH.Host.API.Infrastructure.AppConfigurtaion;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace FH.Host.API.Infrastructure.SqlSugar
 {
@@ -75,7 +72,6 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                 };
                 return new SqlSugarClient(listConfig);
             });
-
         }
 
         private static string GetParas(SugarParameter[] pars)
@@ -89,6 +85,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         }
 
         #region 弃用
+
         /// <summary>
         /// 初始化数据库实例
         /// </summary>
@@ -119,7 +116,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
 
         //    return db;
         //}
-        #endregion
+
+        #endregion 弃用
     }
 }
-

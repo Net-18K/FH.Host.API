@@ -1,19 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using FH.Host.API.Infrastructure.DB;
+﻿using FH.Host.API.Infrastructure.DB;
 using FH.Host.API.Infrastructure.SqlSugar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Swashbuckle.AspNetCore.Swagger;
+using System.IO;
 
 namespace FH.Host.API.Core
 {
@@ -42,7 +35,6 @@ namespace FH.Host.API.Core
             Version = Configuration["ProjectInfo:Version"];
             Project_Name = Configuration["ProjectInfo:Project_Name"];
             Project_Name_English = Configuration["ProjectInfo:Project_Name_English"];
-            
         }
 
         public IConfiguration Configuration { get; }
@@ -100,7 +92,7 @@ namespace FH.Host.API.Core
                 var entityXmlPath = Path.Combine(basePath, "FH.Host.API.Model.xml");
 
                 // 启动XML注释
-                s.IncludeXmlComments(xmlPath,true);
+                s.IncludeXmlComments(xmlPath, true);
                 s.IncludeXmlComments(entityXmlPath, true);
             });
         }

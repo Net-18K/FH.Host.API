@@ -5,17 +5,19 @@ using System;
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+
 namespace FH.Host.API.Infrastructure.SqlSugar
 {
     public class OwnerRepository : IOwnerRepository
     {
         private SqlSugarClient _dbBase;
+
         public OwnerRepository(ISqlSugarClient sqlSugar)
         {
             _dbBase = sqlSugar as SqlSugarClient;
         }
+
         /// <summary>
         /// 对外的扩展操作
         /// </summary>

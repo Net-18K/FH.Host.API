@@ -2,9 +2,7 @@
 using FH.Host.API.Model.Model;
 using SqlSugar;
 using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FH.Host.API.Infrastructure.SqlSugar
@@ -12,6 +10,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
     public class LogRepository : ILogRepository
     {
         private SqlSugarClient _dbBase;
+
         /// <summary>
         /// 对外的扩展操作
         /// </summary>
@@ -19,6 +18,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         {
             _dbBase = sqlSugar as SqlSugarClient;
         }
+
         private ISqlSugarClient _db
         {
             get
