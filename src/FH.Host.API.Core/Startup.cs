@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FH.Host.API.Infrastructure.DB;
+using FH.Host.API.Infrastructure.SqlSugar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -53,6 +54,9 @@ namespace FH.Host.API.Core
 
             // 注册FangHuaHostDbContext为服务
             services.AddDbContext<FangHuaHostDbContext>();
+
+            // 开启SqlSugar
+            services.AddSqlSugarSevice();
 
             // 注册Swagger服务，定义1个或者多个Swagger文档
             services.AddSwaggerGen(s =>

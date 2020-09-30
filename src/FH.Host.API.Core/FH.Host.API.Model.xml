@@ -79,5 +79,35 @@
             软删除时间于备注
             </summary>
         </member>
+        <member name="T:FH.Host.API.Model.Model.PageModel`1">
+            <summary>
+            通用分页信息类
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Model.PageModel`1.page">
+            <summary>
+            当前页标
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Model.PageModel`1.pageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Model.PageModel`1.dataCount">
+            <summary>
+            数据总数
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Model.PageModel`1.pageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.Model.PageModel`1.data">
+            <summary>
+            返回数据
+            </summary>
+        </member>
     </members>
 </doc>
