@@ -47,6 +47,12 @@ namespace FH.Host.API.Core
             // 注册FangHuaHostDbContext为服务
             services.AddDbContext<FangHuaHostDbContext>();
 
+            // 注册SqlSugar基础方式使用类为服务
+            services.AddTransient(typeof(IOwnerRepository<>), typeof(OwnerRepository<>));
+
+            // 注册SqlSugar对日志操作方法的封装类为服务
+            services.AddTransient(typeof(ILogRepository<>), typeof(LogRepository<>));
+
             // 开启SqlSugar
             services.AddSqlSugarSevice();
 

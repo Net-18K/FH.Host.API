@@ -11,11 +11,10 @@ namespace FH.Host.API.Application.Admin
     [ApiController]
     public class AdminService
     {
-        private readonly OwnerRepository<FH_Admin> _context;
+        private readonly IOwnerRepository<FH_Admin> _context;
 
-        public AdminService(OwnerRepository<FH_Admin> repository)
+        public AdminService(IOwnerRepository<FH_Admin> repository)
         {
-            System.Console.WriteLine(repository);
             _context = repository;
         }
 

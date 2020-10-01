@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace FH.Host.API.Infrastructure.SqlSugar
 {
-    public interface ILogRepository
+    /// <summary>
+    /// SqlSugar对日志操作方法的封装接口
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    public interface ILogRepository<T> where T : class, new()
     {
         /// <summary>
         /// 执行数据库主体
@@ -14,43 +18,39 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         ISqlSugarClient LogDb { get; }
 
         /// <summary>
-        /// 分页查询异步
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="whereExpression">表达式树</param>
-        /// <param name="intPageIndex">当前页</param>
-        /// <param name="intPageSize">每页容量</param>
-        /// <param name="strOrderByFileds">排序字段</param>
-        /// <returns></returns>
-        Task<PageModel<T>> QueryPageAsync<T>(Expression<Func<T, bool>> whereExpression, int intPageIndex = 1, int intPageSize = 20, string strOrderByFileds = null) where T : class;
-
-        /// <summary>
-        /// 分页查询
-        /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="whereExpression">表达式树</param>
-        /// <param name="intPageIndex">当前页</param>
-        /// <param name="intPageSize">每页容量</param>
-        /// <param name="strOrderByFileds">排序字段</param>
-        /// <returns></returns>
-        PageModel<T> QueryPage<T>(Expression<Func<T, bool>> whereExpression, int intPageIndex = 1, int intPageSize = 20, string strOrderByFileds = null) where T : class;
-
-        /// <summary>
         /// 插入 返回自增间的值bigint异步
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="o"></param>
+        /// <param name="model"></param>
         /// <param name="ignoreColumn">需要排除的列</param>
         /// <returns></returns>
-        Task<long> InsertReturnLongAsync<T>(T o, params string[] ignoreColumn) where T : class, new();
+        Task<long> InsertReturnLongAsync(T model, params string[] ignoreColumn);
 
         /// <summary>
         /// 插入 返回自增间的值bigint
         /// </summary>
-        /// <typeparam name="T"></typeparam>
-        /// <param name="o"></param>
+        /// <param name="model"></param>
         /// <param name="ignoreColumn">需要排除的列</param>
         /// <returns></returns>
-        long InsertReturnLong<T>(T o, params string[] ignoreColumn) where T : class, new();
+        long InsertReturnLong(T model, params string[] ignoreColumn);
+
+        /// <summary>
+        /// 分页查询异步
+        /// </summary>
+        /// <param name="whereExpression">表达式树</param>
+        /// <param name="intPageIndex">当前页</param>
+        /// <param name="intPageSize">每页容量</param>
+        /// <param name="strOrderByFileds">排序字段</param>
+        /// <returns></returns>
+        Task<PageModel<T>> QueryPageAsync(Expression<Func<T, bool>> whereExpression, int intPageIndex = 1, int intPageSize = 20, string strOrderByFileds = null);
+
+        /// <summary>
+        /// 分页查询
+        /// </summary>
+        /// <param name="whereExpression">表达式树</param>
+        /// <param name="intPageIndex">当前页</param>
+        /// <param name="intPageSize">每页容量</param>
+        /// <param name="strOrderByFileds">排序字段</param>
+        /// <returns></returns>
+        PageModel<T> QueryPage(Expression<Func<T, bool>> whereExpression, int intPageIndex = 1, int intPageSize = 20, string strOrderByFileds = null);
     }
 }

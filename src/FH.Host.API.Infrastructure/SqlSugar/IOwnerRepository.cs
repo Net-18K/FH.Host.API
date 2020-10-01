@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace FH.Host.API.Infrastructure.SqlSugar
 {
+    /// <summary>
+    /// SqlSugar基础使用方法封装接口
+    /// </summary>
+    /// <typeparam name="T">需要操作的实体类(表)</typeparam>
     public interface IOwnerRepository<T> where T : class, new()
     {
         /// <summary>
