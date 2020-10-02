@@ -1,4 +1,5 @@
 ﻿using FH.Host.API.Infrastructure.AppConfigurtaion;
+using FH.Host.API.Model.LogEntity;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
@@ -42,7 +43,8 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                             }
                              if (AppConfigurtaionService.Configuration["ConnectionStrings:DbMSSQLMainIsLogSqlToLog"] == "True")// 是否记录Sql语句到数据库中的开关
                             {
-                                    log.Info(GetParas(pars) + "【SQL语句】：" + sql);
+                                    // 添加Sql语句到日志库
+                                    LogDB.Insertable<FH_SqlLog>(new FH_SqlLog(){Sql = GetParas(pars) + "【SQL语句】：" + sql});
                             }
                             }
                         }
@@ -50,7 +52,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                     new ConnectionConfig
                     {
                         ConfigId = AppConfigurtaionService.Configuration["ConnectionStrings:DefaultLogDBConfigId"],// 此链接标志，用以后面切库使用
-                        ConnectionString = AppConfigurtaionService.Configuration["ConnectionStrings:DefaultLog"],// 业务库连接字符串
+                        ConnectionString = AppConfigurtaionService.Configuration["ConnectionStrings:DefaultLog"],// 日志库连接字符串
                         DbType = DbType.SqlServer,
                         IsShardSameThread = true,
                         IsAutoCloseConnection = true,// 开启自动释放模式和EF原理一样我就不多解释了
@@ -81,6 +83,29 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                 key += $"{param.ParameterName}:{param.Value}\r\n";
             }
             return key;
+        }
+
+        /// <summary>
+        /// 初始化日志数据库实例(用来添加日志到数据库)
+        /// </summary>
+        public static SqlSugarClient LogDB => GetLogInstance();
+
+        /// <summary>
+        /// 得到Log数据库实例(用来添加日志到数据库)
+        /// </summary>
+        /// <returns></returns>
+        private static SqlSugarClient GetLogInstance()
+        {
+            var db = new SqlSugarClient(
+                new ConnectionConfig
+                {
+                    ConnectionString = AppConfigurtaionService.Configuration["ConnectionStrings:DefaultLog"],// 日志库连接字符串
+                    DbType = DbType.SqlServer,
+                    IsShardSameThread = true,
+                    IsAutoCloseConnection = true,// 开启自动释放模式和EF原理一样我就不多解释了
+                    InitKeyType = InitKeyType.Attribute,// 从特性读取主键和自增列信息
+                });
+            return db;
         }
 
         #region 弃用

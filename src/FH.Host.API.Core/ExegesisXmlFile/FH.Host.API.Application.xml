@@ -4,9 +4,30 @@
         <name>FH.Host.API.Application</name>
     </assembly>
     <members>
+        <member name="T:FH.Host.API.Application.Admin.AdminService">
+            <summary>
+            管理员服务
+            </summary>
+        </member>
         <member name="M:FH.Host.API.Application.Admin.AdminService.SellectAll">
             <summary>
             查询所有Admin(测试)
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:FH.Host.API.Application.SqlLog.LogService">
+            <summary>
+            日志服务
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.SqlLog.SqlLogService">
+            <summary>
+            Sql日志服务
+            </summary>
+        </member>
+        <member name="M:FH.Host.API.Application.SqlLog.SqlLogService.AddSqlLog(System.String)">
+            <summary>
+            添加Sql执行日志
             </summary>
             <returns></returns>
         </member>

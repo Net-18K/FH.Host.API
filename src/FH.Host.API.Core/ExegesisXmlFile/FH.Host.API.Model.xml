@@ -114,6 +114,21 @@
             异常信息
             </summary>
         </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_SqlLog.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_SqlLog.Date">
+            <summary>
+            执行时间
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_SqlLog.Sql">
+            <summary>
+            Sql语句
+            </summary>
+        </member>
         <member name="T:FH.Host.API.Model.Model.PageModel`1">
             <summary>
             通用分页信息类
