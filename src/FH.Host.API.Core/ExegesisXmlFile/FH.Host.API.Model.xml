@@ -79,6 +79,41 @@
             软删除时间于备注
             </summary>
         </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Id">
+            <summary>
+            ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Date">
+            <summary>
+            日志时间
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Thread">
+            <summary>
+            线程ID
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Level">
+            <summary>
+            日志级别
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Logger">
+            <summary>
+            日志对象
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Message">
+            <summary>
+            日志内容
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.LogEntity.FH_Log.Exception">
+            <summary>
+            异常信息
+            </summary>
+        </member>
         <member name="T:FH.Host.API.Model.Model.PageModel`1">
             <summary>
             通用分页信息类

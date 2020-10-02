@@ -4,18 +4,6 @@
         <name>FH.Host.API.Core</name>
     </assembly>
     <members>
-        <member name="T:FH.Host.API.Core.ExceptionFilter.GlobalExceptionFilter">
-            <summary>
-            全局异常处理类
-            </summary>
-        </member>
-        <member name="M:FH.Host.API.Core.Log4Net.Log4NetUtil.LogError(System.String,System.Exception)">
-            <summary>
-            全局异常错误记录持久化
-            </summary>
-            <param name="throwMsg"></param>
-            <param name="ex"></param>
-        </member>
         <member name="P:FH.Host.API.Core.Startup.Version">
             <summary>
             版本号

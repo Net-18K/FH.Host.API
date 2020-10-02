@@ -1,10 +1,12 @@
 ﻿using FH.Host.API.Infrastructure.DB;
+using FH.Host.API.Infrastructure.LogDB;
 using FH.Host.API.Infrastructure.SqlSugar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Swagger;
 using System.IO;
 
@@ -46,6 +48,9 @@ namespace FH.Host.API.Core
 
             // 注册FangHuaHostDbContext为服务
             services.AddDbContext<FangHuaHostDbContext>();
+
+            // 注册FangHuaHostLogDbContext为服务
+            services.AddDbContext<FangHuaHostLogDbContext>();
 
             // 注册SqlSugar基础方式使用类为服务
             services.AddTransient(typeof(IOwnerRepository<>), typeof(OwnerRepository<>));
@@ -93,9 +98,9 @@ namespace FH.Host.API.Core
                 // var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
                 var basePath = Path.GetDirectoryName(typeof(Program).Assembly.Location);// 获取应用程序所在目录（绝对，不受工作目录影响，建议采用此方法获取路径）
                 // 添加接口XML的路径
-                var xmlPath = Path.Combine(basePath, "FH.Host.API.Application.xml");
+                var xmlPath = Path.Combine(basePath, "ExegesisXmlFile/FH.Host.API.Application.xml");
                 // 定义实体类XML的路径
-                var entityXmlPath = Path.Combine(basePath, "FH.Host.API.Model.xml");
+                var entityXmlPath = Path.Combine(basePath, "ExegesisXmlFile/FH.Host.API.Model.xml");
 
                 // 启动XML注释
                 s.IncludeXmlComments(xmlPath, true);
@@ -104,7 +109,7 @@ namespace FH.Host.API.Core
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FangHuaHostDbContext context)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, FangHuaHostDbContext context, ILoggerFactory logger)
         {
             if (env.IsDevelopment())
             {
@@ -121,6 +126,9 @@ namespace FH.Host.API.Core
 
             app.UseHttpsRedirection();
             app.UseMvc();
+
+            // 启用Log4Net
+            logger.AddLog4Net();
 
             // 启用Swagger中间件
             app.UseSwagger();

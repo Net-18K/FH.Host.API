@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace FH.Host.API.Application.Admin
 {
+    /// <summary>
+    /// 管理员服务
+    /// </summary>
     [ApiExplorerSettings(GroupName = "FH.Host.Admin.API")]
     [Route("api/[controller]")]
     [ApiController]

@@ -1,5 +1,5 @@
-﻿using Common.Logging;
-using FH.Host.API.Infrastructure.AppConfigurtaion;
+﻿using FH.Host.API.Infrastructure.AppConfigurtaion;
+using log4net;
 using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
 using System;
@@ -17,7 +17,6 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         public static void AddSqlSugarSevice(this IServiceCollection services)
         {
             if (services == null) throw new ArgumentNullException(nameof(services));
-            // log.Info("测试");
             services.AddScoped<ISqlSugarClient>(o =>
             {
                 // 连接字符串
@@ -41,8 +40,10 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                             {
                                     log.Info(GetParas(pars) + "【SQL语句】：" + sql);
                             }
-                                Console.WriteLine(GetParas(pars) + "【SQL语句】：" + sql);
-                                Console.WriteLine();
+                             if (AppConfigurtaionService.Configuration["ConnectionStrings:DbMSSQLMainIsLogSqlToLog"] == "True")// 是否记录Sql语句到数据库中的开关
+                            {
+                                    log.Info(GetParas(pars) + "【SQL语句】：" + sql);
+                            }
                             }
                         }
                     },
@@ -64,8 +65,6 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                             {
                                     log.Info(GetParas(pars) + "【SQL语句】：" + sql);
                             }
-                                Console.WriteLine(GetParas(pars) + "【SQL语句】：" + sql);
-                                Console.WriteLine();
                             }
                         }
                     }
@@ -81,7 +80,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
             {
                 key += $"{param.ParameterName}:{param.Value}\r\n";
             }
-            return key + "<br/>";
+            return key;
         }
 
         #region 弃用
