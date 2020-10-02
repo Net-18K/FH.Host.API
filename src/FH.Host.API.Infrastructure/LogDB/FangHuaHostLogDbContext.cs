@@ -1,9 +1,6 @@
 ﻿using FH.Host.API.Infrastructure.AppConfigurtaion;
 using FH.Host.API.Model.LogEntity;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace FH.Host.API.Infrastructure.LogDB
 {

@@ -1,9 +1,5 @@
 ﻿using FH.Host.API.Infrastructure.SqlSugar;
 using FH.Host.API.Model.LogEntity;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace FH.Host.API.Application.SqlLog
