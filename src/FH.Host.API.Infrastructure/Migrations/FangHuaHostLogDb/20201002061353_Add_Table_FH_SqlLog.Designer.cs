@@ -4,14 +4,16 @@ using FH.Host.API.Infrastructure.LogDB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FH.Host.API.Infrastructure.Migrations.FangHuaHostLogDb
 {
     [DbContext(typeof(FangHuaHostLogDbContext))]
-    partial class FangHuaHostLogDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201002061353_Add_Table_FH_SqlLog")]
+    partial class Add_Table_FH_SqlLog
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

@@ -29,5 +29,7 @@ namespace FH.Host.API.Infrastructure.LogDB
         }
 
         public DbSet<FH_Log> FH_Log { get; set; }
+
+        public DbSet<FH_SqlLog> FH_SqlLog { get; set; }
     }
 }
