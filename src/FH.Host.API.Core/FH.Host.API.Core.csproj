@@ -3,11 +3,21 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
+    <Authors>Mr.Fang</Authors>
+    <Company>Mr.Fang NetWork</Company>
+    <Description>Mr.Fang wx F132951
+FH.Host.API.Core</Description>
+    <PackageId>FH.Host.API.Core_wx_F132951</PackageId>
+    <Copyright>Mr.Fang</Copyright>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile />
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>F:\File\Visual Studio Files\FH.Host.API\src\FH.Host.API.Core\FH.Host.API.Core.xml</DocumentationFile>
+    <DocumentationFile>F:\File\Visual Studio Files\FH.Host.API\src\FH.Host.API.Core\ExegesisXmlFile\FH.Host.API.Core.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
+    <OutputPath></OutputPath>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,22 +32,29 @@
     <Content Update="appsettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Update="log4net.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="FH.Host.API.Application.xml">
+    <None Update="ExegesisXmlFile\FH.Host.API.Application.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ExegesisXmlFile\FH.Host.API.Core.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="ExegesisXmlFile\FH.Host.API.Model.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="FH.Host.API.Core.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="FH.Host.API.Model.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Controllers\" />
+    <Folder Include="ExegesisXmlFile\" />
   </ItemGroup>
 
 </Project>
