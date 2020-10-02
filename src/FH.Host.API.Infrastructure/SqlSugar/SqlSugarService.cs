@@ -1,4 +1,5 @@
 ﻿using FH.Host.API.Infrastructure.AppConfigurtaion;
+using FH.Host.API.Infrastructure.LogDBDto.SqlLogDto;
 using FH.Host.API.Model.LogEntity;
 using log4net;
 using Microsoft.Extensions.DependencyInjection;
@@ -34,7 +35,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
 
                         AopEvents = new AopEvents
                         {
-                            OnLogExecuting = (sql, pars) =>
+                            OnLogExecuting = async(sql, pars) =>
                             {
                             // MiniProfiler.Current.CustomTiming("SQL：", GetParas(pars) + "【SQL语句】：" + sql);
                             if (AppConfigurtaionService.Configuration["ConnectionStrings:DbMSSQLMainIsLogSql"] == "True")// 是否记录Sql语句到日志文件中的开关
@@ -44,7 +45,9 @@ namespace FH.Host.API.Infrastructure.SqlSugar
                              if (AppConfigurtaionService.Configuration["ConnectionStrings:DbMSSQLMainIsLogSqlToLog"] == "True")// 是否记录Sql语句到数据库中的开关
                             {
                                     // 添加Sql语句到日志库
-                                    LogDB.Insertable<FH_SqlLog>(new FH_SqlLog(){Sql = GetParas(pars) + "【SQL语句】：" + sql});
+                                    await LogDB.Insertable<FH_SqlLog>(
+                                        new CreateSqlLogDto(){Sql = GetParas(pars) + "【SQL语句】：" + sql})
+                                        .ExecuteReturnBigIdentityAsync();
                             }
                             }
                         }
