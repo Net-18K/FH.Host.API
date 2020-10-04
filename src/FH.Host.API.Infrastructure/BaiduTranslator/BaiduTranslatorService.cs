@@ -2,8 +2,8 @@
 using FH.Host.API.Infrastructure.Http;
 using FH.Host.API.Infrastructure.String;
 using Newtonsoft.Json;
-using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace FH.Host.API.Infrastructure.BaiduTranslator
 {
@@ -53,6 +53,13 @@ namespace FH.Host.API.Infrastructure.BaiduTranslator
         /// </summary>
         protected static string Sign { get; set; }
 
+        /// <summary>
+        /// Get翻译请求
+        /// </summary>
+        /// <param name="content">内容</param>
+        /// <param name="from">原文语言</param>
+        /// <param name="to">译文语言</param>
+        /// <returns></returns>
         public static async Task<BaiduTranslatorResultDto> Translator(string content, string from = null, string to = null)
         {
             // 判断翻译语言
@@ -61,10 +68,31 @@ namespace FH.Host.API.Infrastructure.BaiduTranslator
             // 签名
             Sign = MD5Service.GenerateMD5(APPID + content + Salt + SecretKey);
             // 参数
-            var parameter = string.Format(Parameter, content, From, To, APPID, Salt, Sign);
+            var parameter = string.Format(Parameter, HttpUtility.UrlEncode(content), From, To, APPID, Salt, Sign);
             // GetAsync请求
             var resultString = await HttpRequestService.HttpGetAsync(Url + "?" + parameter);
-            StringBuilder resultStringBuilder = new StringBuilder();
+            // 去除转义字符
+            //foreach (char c in resultString)
+            //{
+            //    if (c != '\\') resultStringBuilder.Append(c);
+            //}
+            // 返回字符串转换为JSON对象
+            return JsonConvert.DeserializeObject<BaiduTranslatorResultDto>(resultString);
+        }
+
+        public static async Task<BaiduTranslatorResultDto> TranslatorPost(string content, string from = null, string to = null)
+        {
+            // 判断翻译语言
+            if (from != null) From = from;
+            if (to != null) To = to;
+            // 签名
+            Sign = MD5Service.GenerateMD5(APPID + content + Salt + SecretKey);
+            // 参数
+            var parameter = string.Format(Parameter, HttpUtility.UrlEncode(content), From, To, APPID, Salt, Sign);
+            // GetAsync请求
+            // 如使用POST方式，Content-Type请指定为：application/x-www-form-urlencoded
+            // PostAsync请求(由于Get请求可能出现Url过长,获取不到数据,所以采用Post请求)
+            var resultString = await HttpRequestService.HttpPostAsync(Url, parameter, "application/x-www-form-urlencoded");
             // 去除转义字符
             //foreach (char c in resultString)
             //{
