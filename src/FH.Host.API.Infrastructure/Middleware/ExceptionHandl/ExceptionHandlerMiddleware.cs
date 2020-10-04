@@ -54,6 +54,11 @@ namespace FH.Host.API.Infrastructure.Middleware.ExceptionHandl
             httpContext.Response.ContentType = "application/json";
             // 把异常信息通过百度翻译再返回出去
             var resultDto = await BaiduTranslatorService.Translator(e.GetBaseException().Message);
+            // 由于Get请求可能出现Url过长,获取不到数据,所以采用Post请求再翻译一次
+            if (resultDto.Trans_Result == null)
+            {
+                resultDto = await BaiduTranslatorService.TranslatorPost(e.GetBaseException().Message);
+            }
             // 异常信息返回格式 [zh]：中文 [en]英文
             await httpContext.Response
                 .WriteAsync(JsonConvert.SerializeObject(new ResultDto()
