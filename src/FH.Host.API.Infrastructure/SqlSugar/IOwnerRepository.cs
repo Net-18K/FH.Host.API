@@ -18,6 +18,11 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// </summary>
         ISqlSugarClient Db { get; }
 
+        /// <summary>
+        /// 默认条件 一般用作查询排除软删除
+        /// </summary>
+        List<IConditionalModel> ConModels { get; }
+
         #region Query
 
         /// <summary>
@@ -142,7 +147,135 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <param name="orderBy">排序条件</param>
         /// <param name="orderByType">排序类型（Asc、Desc）</param>
         /// <returns></returns>
-        Task<List<T>> GetPageList<T>(int pageIndex, int pageSize, bool isWhere = false, Expression<Func<T, bool>> whereExp = null, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+        Task<List<T>> GetPageList(int pageIndex, int pageSize, bool isWhere = false, Expression<Func<T, bool>> whereExp = null, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        #endregion Query
+
+        #region QueryNoIsDeleted
+
+        /// <summary>
+        /// 查询所有数据
+        /// </summary>
+        /// <returns></returns>
+        Task<List<T>> GetAll_NID(bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 取前 num 条数据
+        /// </summary>
+        /// <param name="num">取前几条</param>
+        /// <returns></returns>
+        Task<List<T>> GetTakeList_NID(int num, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 获取单表 分页数据
+        /// </summary>
+        /// <param name="skip">跳过几条</param>
+        /// <param name="take">取几条</param>
+        /// <param name="whereExp">跳过几条</param>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="orderByType">排序类型（Asc、Desc）</param>
+        /// <returns></returns>
+        Task<List<T>> GetPageList_NID(int skip, int take, Expression<Func<T, bool>> whereExp, Expression<Func<T, object>> orderBy, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 获取符合条件的前 num 条数据
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <param name="num">取前几条</param>
+        /// <returns></returns>
+        Task<List<T>> GetTakeList_NID(Expression<Func<T, bool>> where, int num, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 根据主键查询
+        /// </summary>
+        /// <param name="pkValue">主键</param>
+        /// <returns></returns>
+        Task<T> GetByPrimaryKey_NID(object pkValue);
+
+        /// <summary>
+        /// 根据条件获取 单条数据
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <returns></returns>
+        Task<T> GetFirstOrDefault_NID(Expression<Func<T, bool>> where);
+
+        /// <summary>
+        /// 根据主键 In  查询
+        /// </summary>
+        /// <typeparam name="S">主键的类型</typeparam>
+        /// <param name="list">主键 In 操作的结果集</param>
+        /// <returns></returns>
+        Task<List<T>> GetByIn_NID<S>(List<S> list, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 根据指定列 In 查询
+        /// </summary>
+        /// <typeparam name="S">指定列的类型</typeparam>
+        /// <param name="column">指定列</param>
+        /// <param name="list">指定列 In 操作 的结果集</param>
+        /// <returns></returns>
+        Task<List<T>> GetByIn_NID<S>(Expression<Func<T, object>> column, List<S> list, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 根据指定列 Not In (!Contain)查询
+        /// </summary>
+        /// <typeparam name="S">指定列类型</typeparam>
+        /// <param name="list">Not In的结果集</param>
+        /// <param name="field">指定列</param>
+        /// <returns></returns>
+        Task<List<T>> GetByNotIn_NID<S>(List<S> list, object field, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 根据条件 查询
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <returns></returns>
+        Task<List<T>> GetByWhere_NID(Expression<Func<T, bool>> where, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 单个条件 根据 isWhere 判断 是否使用此条件进行查询
+        /// </summary>
+        /// <param name="isWhere">判断是否使用此查询条件的条件</param>
+        /// <param name="where">查询条件</param>
+        /// <returns></returns>
+        Task<List<T>> GetByWhereIF_NID(bool isWhere, Expression<Func<T, bool>> where, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 多个条件 根据 wheres.value  判断是否使用 此 wheres.key 的条件
+        /// </summary>
+        /// <param name="wheres">查询条件</param>
+        /// <returns></returns>
+        Task<List<T>> GetByWhereIF_NID(Dictionary<Expression<Func<T, bool>>, bool> wheres, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 查询 指定列的值 在 start至end 之间的数据
+        /// </summary>
+        /// <param name="value">指定类</param>
+        /// <param name="start">开始</param>
+        /// <param name="end">结束</param>
+        /// <returns></returns>
+        Task<List<T>> GetByBetween_NID(object value, object start, object end, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
+
+        /// <summary>
+        /// 判断是否存在这条记录
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <returns></returns>
+        Task<bool> GetIsAny_NID(Expression<Func<T, bool>> where);
+
+        /// <summary>
+        /// 单表分页查询
+        /// </summary>
+        /// <typeparam name="T">要查询的表</typeparam>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">页面容量</param>
+        /// <param name="isWhere">是否需要条件查询</param>
+        /// <param name="whereExp">查询条件</param>
+        /// <param name="isOrderBy">是否需要排序条件</param>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="orderByType">排序类型（Asc、Desc）</param>
+        /// <returns></returns>
+        Task<List<T>> GetPageList_NID(int pageIndex, int pageSize, bool isWhere = false, Expression<Func<T, bool>> whereExp = null, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc);
 
         /// <summary>
         /// 两表查询，
@@ -237,7 +370,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         Task<object> GetScalar(string sql, params SugarParameter[] parameters);
 
-        #endregion Query
+        #endregion QueryNoIsDeleted
 
         #region Add
 

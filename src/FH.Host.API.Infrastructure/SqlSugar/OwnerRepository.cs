@@ -36,6 +36,22 @@ namespace FH.Host.API.Infrastructure.SqlSugar
             }
         }
 
+        /// <summary>
+        /// 默认条件 一般用作查询排除软删除
+        /// </summary>
+        public List<IConditionalModel> ConModels => _conModels;
+
+        private List<IConditionalModel> _conModels
+        {
+            get
+            {
+                return new List<IConditionalModel>()
+                {
+                    new ConditionalModel{FieldName = "IsDeleted", ConditionalType = ConditionalType.NoEqual, FieldValue = "1"}
+                };
+            }
+        }
+
         #region Query
 
         /// <summary>
@@ -44,7 +60,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetAll(bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -54,7 +70,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetTakeList(int num, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().OrderByIF(isOrderBy, orderBy, orderByType).Take(num).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).OrderByIF(isOrderBy, orderBy, orderByType).Take(num).ToListAsync();
         }
 
         /// <summary>
@@ -68,7 +84,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetPageList(int skip, int take, Expression<Func<T, bool>> whereExp, Expression<Func<T, object>> orderBy, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().Skip(skip).Take(take).OrderBy(orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).Skip(skip).Take(take).OrderBy(orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -79,7 +95,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetTakeList(Expression<Func<T, bool>> where, int num, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().Where(where).OrderByIF(isOrderBy, orderBy, orderByType).Take(num).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).Where(where).OrderByIF(isOrderBy, orderBy, orderByType).Take(num).ToListAsync();
         }
 
         /// <summary>
@@ -89,7 +105,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<T> GetByPrimaryKey(object pkValue)
         {
-            return await _dbBase.Queryable<T>().InSingleAsync(pkValue);
+            return await _dbBase.Queryable<T>().Where(ConModels).InSingleAsync(pkValue);
         }
 
         /// <summary>
@@ -99,7 +115,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<T> GetFirstOrDefault(Expression<Func<T, bool>> where)
         {
-            return await _dbBase.Queryable<T>().FirstAsync(where);//查询单条没有数据返回NULL, Single超过1条会报错，First不会
+            return await _dbBase.Queryable<T>().Where(ConModels).FirstAsync(where);//查询单条没有数据返回NULL, Single超过1条会报错，First不会
         }
 
         /// <summary>
@@ -110,7 +126,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByIn<S>(List<S> list, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().In<S>(list).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).In<S>(list).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -122,7 +138,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByIn<S>(Expression<Func<T, object>> column, List<S> list, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().In<S>(column, list).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).In<S>(column, list).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -134,7 +150,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByNotIn<S>(List<S> list, object field, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().Where(t => !SqlFunc.ContainsArray(list, field)).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).Where(t => !SqlFunc.ContainsArray(list, field)).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -144,7 +160,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByWhere(Expression<Func<T, bool>> where, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().Where(where).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).Where(where).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -155,7 +171,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByWhereIF(bool isWhere, Expression<Func<T, bool>> where, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().WhereIF(isWhere, where).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).WhereIF(isWhere, where).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -165,7 +181,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByWhereIF(Dictionary<Expression<Func<T, bool>>, bool> wheres, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            var able = _dbBase.Queryable<T>();
+            var able = _dbBase.Queryable<T>().Where(ConModels);
             foreach (var item in wheres)
             {
                 able.WhereIF(item.Value, item.Key);
@@ -182,7 +198,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <returns></returns>
         public async Task<List<T>> GetByBetween(object value, object start, object end, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
-            return await _dbBase.Queryable<T>().Where(it => SqlFunc.Between(value, start, end)).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+            return await _dbBase.Queryable<T>().Where(ConModels).Where(it => SqlFunc.Between(value, start, end)).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
         }
 
         /// <summary>
@@ -191,6 +207,184 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <param name="where">条件</param>
         /// <returns></returns>
         public async Task<bool> GetIsAny(Expression<Func<T, bool>> where)
+        {
+            return await _dbBase.Queryable<T>().Where(ConModels).AnyAsync(where);
+        }
+
+        /// <summary>
+        /// 单表分页查询
+        /// </summary>
+        /// <typeparam name="T">要查询的表</typeparam>
+        /// <param name="pageIndex">页码</param>
+        /// <param name="pageSize">页面容量</param>
+        /// <param name="isWhere">是否需要条件查询</param>
+        /// <param name="whereExp">查询条件</param>
+        /// <param name="isOrderBy">是否需要排序条件</param>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="orderByType">排序类型（Asc、Desc）</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetPageList(int pageIndex, int pageSize, bool isWhere = false, Expression<Func<T, bool>> whereExp = null, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().Where(ConModels).WhereIF(isWhere, whereExp).OrderByIF(isOrderBy, orderBy).ToPageListAsync(pageIndex, pageSize);
+        }
+
+        #endregion Query
+
+        #region QueryNoIsDeleted
+
+        /// <summary>
+        /// 查询所有数据
+        /// </summary>
+        /// <returns></returns>
+        public async Task<List<T>> GetAll_NID(bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 取前 num 条数据
+        /// </summary>
+        /// <param name="num">取前几条</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetTakeList_NID(int num, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().OrderByIF(isOrderBy, orderBy, orderByType).Take(num).ToListAsync();
+        }
+
+        /// <summary>
+        /// 获取单表 分页数据
+        /// </summary>
+        /// <param name="skip">跳过几条</param>
+        /// <param name="take">取几条</param>
+        /// <param name="whereExp">跳过几条</param>
+        /// <param name="orderBy">排序条件</param>
+        /// <param name="orderByType">排序类型（Asc、Desc）</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetPageList_NID(int skip, int take, Expression<Func<T, bool>> whereExp, Expression<Func<T, object>> orderBy, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().Skip(skip).Take(take).OrderBy(orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 获取符合条件的前 num 条数据
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <param name="num">取前几条</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetTakeList_NID(Expression<Func<T, bool>> where, int num, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().Where(where).OrderByIF(isOrderBy, orderBy, orderByType).Take(num).ToListAsync();
+        }
+
+        /// <summary>
+        /// 根据主键查询
+        /// </summary>
+        /// <param name="pkValue">主键</param>
+        /// <returns></returns>
+        public async Task<T> GetByPrimaryKey_NID(object pkValue)
+        {
+            return await _dbBase.Queryable<T>().InSingleAsync(pkValue);
+        }
+
+        /// <summary>
+        /// 根据条件获取 单条数据
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <returns></returns>
+        public async Task<T> GetFirstOrDefault_NID(Expression<Func<T, bool>> where)
+        {
+            return await _dbBase.Queryable<T>().FirstAsync(where);//查询单条没有数据返回NULL, Single超过1条会报错，First不会
+        }
+
+        /// <summary>
+        /// 根据主键 In  查询
+        /// </summary>
+        /// <typeparam name="S">主键的类型</typeparam>
+        /// <param name="list">主键 In 操作的结果集</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByIn_NID<S>(List<S> list, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().In<S>(list).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 根据指定列 In 查询
+        /// </summary>
+        /// <typeparam name="S">指定列的类型</typeparam>
+        /// <param name="column">指定列</param>
+        /// <param name="list">指定列 In 操作 的结果集</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByIn_NID<S>(Expression<Func<T, object>> column, List<S> list, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().In<S>(column, list).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 根据指定列 Not In (!Contain)查询
+        /// </summary>
+        /// <typeparam name="S">指定列类型</typeparam>
+        /// <param name="list">Not In的结果集</param>
+        /// <param name="field">指定列</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByNotIn_NID<S>(List<S> list, object field, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().Where(t => !SqlFunc.ContainsArray(list, field)).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 根据条件 查询
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByWhere_NID(Expression<Func<T, bool>> where, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().Where(where).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 单个条件 根据 isWhere 判断 是否使用此条件进行查询
+        /// </summary>
+        /// <param name="isWhere">判断是否使用此查询条件的条件</param>
+        /// <param name="where">查询条件</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByWhereIF_NID(bool isWhere, Expression<Func<T, bool>> where, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().WhereIF(isWhere, where).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 多个条件 根据 wheres.value  判断是否使用 此 wheres.key 的条件
+        /// </summary>
+        /// <param name="wheres">查询条件</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByWhereIF_NID(Dictionary<Expression<Func<T, bool>>, bool> wheres, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            var able = _dbBase.Queryable<T>();
+            foreach (var item in wheres)
+            {
+                able.WhereIF(item.Value, item.Key);
+            }
+            return await able.OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 查询 指定列的值 在 start至end 之间的数据
+        /// </summary>
+        /// <param name="value">指定类</param>
+        /// <param name="start">开始</param>
+        /// <param name="end">结束</param>
+        /// <returns></returns>
+        public async Task<List<T>> GetByBetween_NID(object value, object start, object end, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        {
+            return await _dbBase.Queryable<T>().Where(it => SqlFunc.Between(value, start, end)).OrderByIF(isOrderBy, orderBy, orderByType).ToListAsync();
+        }
+
+        /// <summary>
+        /// 判断是否存在这条记录
+        /// </summary>
+        /// <param name="where">条件</param>
+        /// <returns></returns>
+        public async Task<bool> GetIsAny_NID(Expression<Func<T, bool>> where)
         {
             return await _dbBase.Queryable<T>().AnyAsync(where);
         }
@@ -207,7 +401,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
         /// <param name="orderBy">排序条件</param>
         /// <param name="orderByType">排序类型（Asc、Desc）</param>
         /// <returns></returns>
-        public async Task<List<T>> GetPageList<T>(int pageIndex, int pageSize, bool isWhere = false, Expression<Func<T, bool>> whereExp = null, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
+        public async Task<List<T>> GetPageList_NID(int pageIndex, int pageSize, bool isWhere = false, Expression<Func<T, bool>> whereExp = null, bool isOrderBy = false, Expression<Func<T, object>> orderBy = null, OrderByType orderByType = OrderByType.Asc)
         {
             return await _dbBase.Queryable<T>().WhereIF(isWhere, whereExp).OrderByIF(isOrderBy, orderBy).ToPageListAsync(pageIndex, pageSize);
         }
@@ -332,7 +526,7 @@ namespace FH.Host.API.Infrastructure.SqlSugar
             return await _dbBase.Ado.GetScalarAsync(sql, parameters);
         }
 
-        #endregion Query
+        #endregion QueryNoIsDeleted
 
         #region Add
 
