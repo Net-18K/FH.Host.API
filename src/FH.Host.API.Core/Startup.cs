@@ -1,5 +1,6 @@
 ﻿using FH.Host.API.Infrastructure.DB;
 using FH.Host.API.Infrastructure.LogDB;
+using FH.Host.API.Infrastructure.Middleware.ExceptionHandl;
 using FH.Host.API.Infrastructure.SqlSugar;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -106,6 +107,18 @@ namespace FH.Host.API.Core
                 s.IncludeXmlComments(xmlPath, true);
                 s.IncludeXmlComments(entityXmlPath, true);
             });
+
+            // 配置跨域
+            services.AddCors(corsOption =>
+            {
+                corsOption.AddPolicy("CustomCorsPolicy",
+                     CorsPolicyBuilder => CorsPolicyBuilder
+                    .AllowAnyOrigin() // 允许任何主机请求
+                    .AllowAnyMethod() // 允许任何请求方式
+                    .AllowAnyHeader() // 允许任何请求头
+                                      // .AllowCredentials() //指定处理cookie
+                    );
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,7 +137,14 @@ namespace FH.Host.API.Core
             // 根据Migrations修改/创建数据库
             new DbInitializer().InitializeAsync(context);
 
+            // 开启全局异常处理捕获
+            app.UseMiddleware(typeof(ExceptionHandlerMiddleware));
+
+            // 开启跨域
+            app.UseCors("CustomCorsPolicy");
+
             app.UseHttpsRedirection();
+
             app.UseMvc();
 
             // 启用Log4Net
