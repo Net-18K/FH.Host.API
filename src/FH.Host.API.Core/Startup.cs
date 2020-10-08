@@ -2,14 +2,19 @@
 using FH.Host.API.Infrastructure.LogDB;
 using FH.Host.API.Infrastructure.Middleware.ExceptionHandl;
 using FH.Host.API.Infrastructure.SqlSugar;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Swashbuckle.AspNetCore.Swagger;
+using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Text;
 
 namespace FH.Host.API.Core
 {
@@ -94,6 +99,8 @@ namespace FH.Host.API.Core
                     }
                 });
 
+                #region 读取XML信息
+
                 // 获取XML注释文件的目录
                 // var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 // var xmlPath = System.IO.Path.Combine(AppContext.BaseDirectory, xmlFile);
@@ -106,6 +113,25 @@ namespace FH.Host.API.Core
                 // 启动XML注释
                 s.IncludeXmlComments(xmlPath, true);
                 s.IncludeXmlComments(entityXmlPath, true);
+
+                #endregion 读取XML信息
+
+                #region Token绑定到ConfigureServices
+
+                //添加Header验证信息
+                //s.OperationFilter<SwaggerHeader>();
+                var security = new Dictionary<string, IEnumerable<string>> { { "FH.Host.API", new string[] { } } };
+                s.AddSecurityRequirement(security);
+
+                s.AddSecurityDefinition("FH.Host.API", new ApiKeyScheme
+                {
+                    Description = "JWT授权(数据将在请求头中进行传输) 直接在下框中输入Bearer {token}（注意两者之间是一个空格）\"",
+                    Name = "Authorization",//jwt默认的参数名称
+                    In = "header",//jwt默认存放Authorization信息的位置(请求头中)
+                    Type = "apiKey"
+                });
+
+                #endregion Token绑定到ConfigureServices
             });
 
             // 配置跨域
@@ -118,6 +144,35 @@ namespace FH.Host.API.Core
                     .AllowAnyHeader() // 允许任何请求头
                                       // .AllowCredentials() //指定处理cookie
                     );
+            });
+
+            // 添加Jwt验证
+            services.AddAuthentication(options =>
+            {
+                // 设置默认使用jwt验证方式
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            }).AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters()
+                {
+                    // 验证接收者
+                    ValidateAudience = true,
+                    // 验证发布者
+                    ValidateIssuer = true,
+                    // 验证过期时间
+                    ValidateLifetime = true,
+                    // 验证秘钥
+                    ValidateIssuerSigningKey = true,
+                    // 读配置Issure 发行人
+                    ValidIssuer = Configuration["Authentication:Issuer"],
+                    // 读配置Audience 订阅人
+                    ValidAudience = Configuration["Authentication:Audience"],
+                    // 设置生成token的秘钥
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Authentication:SecurityKey"])),
+                    ClockSkew = TimeSpan.Zero,
+                    RequireExpirationTime = true
+                };
             });
         }
 
@@ -143,12 +198,15 @@ namespace FH.Host.API.Core
             // 开启跨域
             app.UseCors("CustomCorsPolicy");
 
-            app.UseHttpsRedirection();
-
-            app.UseMvc();
+            // 启用Jwt验证
+            app.UseAuthentication();
 
             // 启用Log4Net
             logger.AddLog4Net();
+
+            app.UseHttpsRedirection();
+
+            app.UseMvc();
 
             // 启用Swagger中间件
             app.UseSwagger();

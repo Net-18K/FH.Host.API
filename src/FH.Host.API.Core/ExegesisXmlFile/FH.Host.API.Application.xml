@@ -11,8 +11,16 @@
         </member>
         <member name="M:FH.Host.API.Application.Admin.AdminService.SellectAll">
             <summary>
-            查询所有Admin(测试)
+            查询所有Admin
             </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.Admin.AdminService.AdminLogin(System.String,System.String)">
+            <summary>
+            管理员登录
+            </summary>
+            <param name="adminName">管理员账号</param>
+            <param name="adminPwd">管理员密码</param>
             <returns></returns>
         </member>
         <member name="T:FH.Host.API.Application.SqlLog.LogService">
