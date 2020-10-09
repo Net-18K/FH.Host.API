@@ -23,6 +23,12 @@
             <param name="adminPwd">管理员密码</param>
             <returns></returns>
         </member>
+        <member name="M:FH.Host.API.Application.Admin.AdminService.GetClientIP">
+            <summary>
+            获取客户端IP地址
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FH.Host.API.Application.SqlLog.LogService">
             <summary>
             日志服务

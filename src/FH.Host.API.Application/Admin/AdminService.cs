@@ -1,4 +1,6 @@
 ﻿using FH.Host.API.Infrastructure.Authorization.Jwt;
+using FH.Host.API.Infrastructure.Http.Client;
+using FH.Host.API.Infrastructure.Http.Client.Dto;
 using FH.Host.API.Infrastructure.Model;
 using FH.Host.API.Infrastructure.SqlSugar;
 using FH.Host.API.Model.DefaultEntity;
@@ -48,24 +50,32 @@ namespace FH.Host.API.Application.Admin
         {
             // 判断是否为空
             if (string.IsNullOrEmpty(adminName) || string.IsNullOrEmpty(adminPwd))
-            {
                 // 账号或密码不能为空
                 throw new Exception("Account or password cannot be empty.");
-            }
             var result = await _context
                 .GetFirstOrDefault(a =>
                 a.AdminName.Equals(adminName) &&
                 a.AdminPwd.Equals(adminPwd));
             if (result != null)
-            {
-                string token = JwtService.GetToken(adminName);
-                return new ResultDto() { ResultInfo = token };
-            }
+                return new ResultDto() { ResultInfo = JwtService.GetToken(adminName) };
             else
-            {
                 // 账号或密码错误
                 throw new Exception("Incorrect username or password.");
-            }
+        }
+
+        /// <summary>
+        /// 获取客户端IP地址
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("GetClientIP")]
+        [AllowAnonymous]
+        public ClientAccessIPResultDto GetClientIP()
+        {
+            /*
+             * 原有思路，本想自己写IP地址获取方法，发现自己写的获取到的是0.0.0.0，
+             * 所以直接采用免费的 搜狐IP 的接口
+             */
+            return ClientAccessIPService.GetClientAccessIP();
         }
     }
 }
