@@ -82,12 +82,51 @@ namespace FH.Host.API.Infrastructure.DB
                     MenuUrl = "https://game.fanghua.host",
                     MenuOrder = 7
                 });
+
+            modelBuilder.Entity<FH_CopywritingInfo>().HasData(
+                new FH_CopywritingInfo()
+                {
+                    Id = 1,
+                    Content = "当你的能力还撑不起你的野心的时，你就需要静下心来 好好学习。"
+                },
+                new FH_CopywritingInfo()
+                {
+                    Id = 2,
+                    Content = "脏的人多了，干净反倒成了一种错。"
+                },
+                new FH_CopywritingInfo()
+                {
+                    Id = 3,
+                    Content = "你羡慕的生活都是你没熬过的苦。"
+                },
+                new FH_CopywritingInfo()
+                {
+                    Id = 4,
+                    Content = "所谓天才，只不过是把别人喝咖啡的功夫都用在了工作上了。"
+                },
+                new FH_CopywritingInfo()
+                {
+                    Id = 5,
+                    Content = "生活便是寻求新的知识。——门捷列夫"
+                },
+                new FH_CopywritingInfo()
+                {
+                    Id = 6,
+                    Content = "如果你浪费了自己的年龄，那是挺可悲的。因为你的青春只能持续一点儿时间——很短的一点儿时间。"
+                },
+                new FH_CopywritingInfo()
+                {
+                    Id = 7,
+                    Content = "世界上一成不变的东西，只有“任何事物都是在不断变化的”这条真理。"
+                });
         }
 
         public DbSet<FH_Admin> FH_Admin { get; set; }
 
         public DbSet<FH_Users> FH_Users { get; set; }
 
-        public DbSet<FH_GuidePagesMenuInfo> GuidePagesMenuInfo { get; set; }
+        public DbSet<FH_GuidePagesMenuInfo> FH_GuidePagesMenuInfo { get; set; }
+
+        public DbSet<FH_CopywritingInfo> FH_CopywritingInfo { get; set; }
     }
 }

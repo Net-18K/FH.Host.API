@@ -129,6 +129,21 @@
             Sql语句
             </summary>
         </member>
+        <member name="T:FH.Host.API.Model.ModelEntity.FH_CopywritingInfo">
+            <summary>
+            文案信息类
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_CopywritingInfo.Id">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_CopywritingInfo.Content">
+            <summary>
+            文案内容
+            </summary>
+        </member>
         <member name="T:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo">
             <summary>
             引导页菜单信息

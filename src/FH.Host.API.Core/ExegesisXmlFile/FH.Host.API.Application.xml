@@ -23,6 +23,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:FH.Host.API.Application.Copywriting.CopywritingInfoService">
+            <summary>
+            文案服务
+            </summary>
+        </member>
+        <member name="M:FH.Host.API.Application.Copywriting.CopywritingInfoService.GetAllCopywritingInfo">
+            <summary>
+            得到所有文案
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FH.Host.API.Application.GuidePagesMenu.GuidePagesMenuInfoService">
             <summary>
             引导页菜单服务
