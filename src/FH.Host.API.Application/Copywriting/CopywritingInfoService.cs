@@ -10,7 +10,7 @@ namespace FH.Host.API.Application.Copywriting
     /// <summary>
     /// 文案服务
     /// </summary>
-    [ApiExplorerSettings(GroupName = "FH.Host.APP.API")]
+    [ApiExplorerSettings(GroupName = "FH.Host.App.API")]
     [Route("api/CopywritingInfoService")]
     [ApiController]
     [Authorize]

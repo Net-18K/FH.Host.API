@@ -10,7 +10,7 @@ namespace FH.Host.API.Application.GuidePagesMenu
     /// <summary>
     /// 引导页菜单服务
     /// </summary>
-    [ApiExplorerSettings(GroupName = "FH.Host.APP.API")]
+    [ApiExplorerSettings(GroupName = "FH.Host.App.API")]
     [Route("api/GuidePagesMenuInfoService")]
     [ApiController]
     [Authorize]
