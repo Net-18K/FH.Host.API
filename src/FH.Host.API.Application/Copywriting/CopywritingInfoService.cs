@@ -28,6 +28,7 @@ namespace FH.Host.API.Application.Copywriting
         /// </summary>
         /// <returns></returns>
         [HttpGet("GetAllCopywritingInfo")]
+        [AllowAnonymous]
         public async Task<List<FH_CopywritingInfo>> GetAllCopywritingInfo()
         {
             return await _context.GetAll();
