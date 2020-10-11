@@ -9,8 +9,4 @@
     <OutputPath>F:\File\Visual Studio Files\FH.Host.API\src\FH.Host.API.Core\bin\Debug\</OutputPath>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Folder Include="Entity\" />
-  </ItemGroup>
-
 </Project>

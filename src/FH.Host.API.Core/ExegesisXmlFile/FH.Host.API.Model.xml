@@ -129,6 +129,36 @@
             Sql语句
             </summary>
         </member>
+        <member name="T:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo">
+            <summary>
+            引导页菜单信息
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo.MenuID">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo.MenuName">
+            <summary>
+            菜单名称
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo.MenuUrl">
+            <summary>
+            菜单Url
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo.ParentId">
+            <summary>
+            父级菜单Id
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo.MenuOrder">
+            <summary>
+            菜单排序
+            </summary>
+        </member>
         <member name="T:FH.Host.API.Model.Model.PageModel`1">
             <summary>
             通用分页信息类

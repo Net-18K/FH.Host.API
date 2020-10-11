@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 <doc>
-  <assembly>
-    <name>FH.Host.API.Core</name>
-  </assembly>
-  <members>
-    <member name="P:FH.Host.API.Core.Startup.Version">
-      <summary>
-        版本号
-      </summary>
-    </member>
-    <member name="P:FH.Host.API.Core.Startup.Project_Name">
-      <summary>
-        项目名称
-      </summary>
-    </member>
-    <member name="P:FH.Host.API.Core.Startup.Project_Name_English">
-      <summary>
-        项目名称_英文
-      </summary>
-    </member>
-  </members>
+    <assembly>
+        <name>FH.Host.API.Core</name>
+    </assembly>
+    <members>
+        <member name="P:FH.Host.API.Core.Startup.Version">
+            <summary>
+            版本号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Core.Startup.Project_Name">
+            <summary>
+            项目名称
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Core.Startup.Project_Name_English">
+            <summary>
+            项目名称_英文
+            </summary>
+        </member>
+    </members>
 </doc>
