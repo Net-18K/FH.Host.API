@@ -144,6 +144,26 @@
             文案内容
             </summary>
         </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_EmailHistoryInfo.EHID">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_EmailHistoryInfo.RecipientId">
+            <summary>
+            收件人账号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_EmailHistoryInfo.EmailBody">
+            <summary>
+            邮件内容
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Model.ModelEntity.FH_EmailHistoryInfo.EmailCode">
+            <summary>
+            邮件验证码
+            </summary>
+        </member>
         <member name="T:FH.Host.API.Model.ModelEntity.FH_GuidePagesMenuInfo">
             <summary>
             引导页菜单信息

@@ -11,7 +11,7 @@ namespace FH.Host.API.Infrastructure.Email
     /// <summary>
     /// 邮件服务
     /// </summary>
-    public class EmailServices
+    public class EmailServices : IEmailServices
     {
         /// <summary>
         /// 发件人邮箱账号
@@ -96,9 +96,11 @@ namespace FH.Host.API.Infrastructure.Email
         public string SendQQEmail(string recipientId, string recipientBody)
         {
             // 实例化一个发送邮件类
-            MailMessage mailMessage = new MailMessage();
-            // 发件人邮箱地址
-            mailMessage.From = new MailAddress(AddresserID, AddresserName);
+            MailMessage mailMessage = new MailMessage
+            {
+                // 发件人邮箱地址
+                From = new MailAddress(AddresserID, AddresserName)
+            };
             // 收件人邮箱地址
             mailMessage.To.Add(new MailAddress(recipientId));
             // 邮件标题

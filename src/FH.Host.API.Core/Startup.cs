@@ -1,4 +1,5 @@
 ﻿using FH.Host.API.Infrastructure.DB;
+using FH.Host.API.Infrastructure.Email;
 using FH.Host.API.Infrastructure.LogDB;
 using FH.Host.API.Infrastructure.Middleware.ExceptionHandl;
 using FH.Host.API.Infrastructure.SqlSugar;
@@ -63,6 +64,9 @@ namespace FH.Host.API.Core
 
             // 注册SqlSugar对日志操作方法的封装类为服务
             services.AddTransient(typeof(ILogRepository<>), typeof(LogRepository<>));
+
+            // 注册邮件服务
+            services.AddTransient(typeof(IEmailServices), typeof(EmailServices));
 
             // 开启SqlSugar
             services.AddSqlSugarSevice();
