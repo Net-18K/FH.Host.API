@@ -4,14 +4,16 @@ using FH.Host.API.Infrastructure.DB;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace FH.Host.API.Infrastructure.Migrations
 {
     [DbContext(typeof(FangHuaHostDbContext))]
-    partial class FangHuaHostDbContextModelSnapshot : ModelSnapshot
+    [Migration("20201017072322_Add_Table_FH_EmailHistoryInfo")]
+    partial class Add_Table_FH_EmailHistoryInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

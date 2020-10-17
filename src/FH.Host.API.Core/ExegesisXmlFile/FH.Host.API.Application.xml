@@ -34,6 +34,167 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.Dto.createEmailHistoryInfoDto">
+            <summary>
+            添加邮件历史信息类
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.createEmailHistoryInfoDto.RecipientId">
+            <summary>
+            收件人账号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.createEmailHistoryInfoDto.EmailBody">
+            <summary>
+            邮件内容
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.Dto.EmailHistoryInfoDto">
+            <summary>
+            邮件历史信息类
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.EmailHistoryInfoDto.EHID">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.EmailHistoryInfoDto.RecipientId">
+            <summary>
+            收件人账号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.EmailHistoryInfoDto.EmailBody">
+            <summary>
+            邮件内容
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.EmailHistoryInfoDto.EmailCode">
+            <summary>
+            邮件验证码
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.Dto.GetAllEmailHistoryResultDto">
+            <summary>
+            得到所有邮件历史信息返回结果
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.GetAllEmailHistoryResultDto.ResultListDto">
+            <summary>
+            返回结果集合
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.GetAllEmailHistoryResultDto.Count">
+            <summary>
+            返回结果总数
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.Dto.GetLastEmailHistoryCodeInfoByRecipientIdResultDto">
+            <summary>
+            根据收件人账号得到最后一个邮件的验证码信息返回结果
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.GetLastEmailHistoryCodeInfoByRecipientIdResultDto.RecipientId">
+            <summary>
+            收件人账号
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.GetLastEmailHistoryCodeInfoByRecipientIdResultDto.EmailCode">
+            <summary>
+            邮件验证码
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.GetLastEmailHistoryCodeInfoByRecipientIdResultDto.CreateTime">
+            <summary>
+            创建时间
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.Dto.GetLastEmailHistoryInfoByRecipientIdResultDto">
+            <summary>
+            根据收件人账号得到最后一个邮件历史信息返回结果
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.GetLastEmailHistoryInfoByRecipientIdResultDto.EmailHistoryInfo">
+            <summary>
+            邮件历史信息
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.Dto.UpdateEmailHistoryInfoDto">
+            <summary>
+            修改邮件历史信息类
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.UpdateEmailHistoryInfoDto.EHID">
+            <summary>
+            Id
+            </summary>
+        </member>
+        <member name="P:FH.Host.API.Application.EmailHistory.Dto.UpdateEmailHistoryInfoDto.EmailBody">
+            <summary>
+            邮件内容
+            </summary>
+        </member>
+        <member name="T:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService">
+            <summary>
+            邮件历史信息服务
+            </summary>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.GetAllEmailHistoryInfo">
+            <summary>
+            得到所有邮件历史信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.GetAllEmailHistoryInfoByRecipientId(System.String)">
+            <summary>
+            根据收件人账号得到所有邮件历史信息
+            </summary>
+            <param name="recipientId">收件人账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.GetLastEmailHistoryInfoByRecipientId(System.String)">
+            <summary>
+            根据收件人账号得到最后一个邮件历史信息
+            </summary>
+            <param name="recipientId">收件人账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.GetLastEmailHistoryCodeInfoByRecipientId(System.String)">
+            <summary>
+            根据收件人账号得到最后一个邮件的验证码信息
+            </summary>
+            <param name="recipientId">收件人账号</param>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.CreateEmailHistoryInfo(FH.Host.API.Application.EmailHistory.Dto.createEmailHistoryInfoDto,System.Nullable{System.Boolean})">
+            <summary>
+            添加邮件历史信息
+            </summary>
+            <param name="createEmailHistoryInfoDto">添加邮件历史信息类</param>
+            <param name="isSendEmail">是否发送邮件，默认为发送</param>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.UpdateEmailHistoryInfo(FH.Host.API.Application.EmailHistory.Dto.UpdateEmailHistoryInfoDto)">
+            <summary>
+            修改邮件历史信息
+            </summary>
+            <param name="updateEmailHistoryInfoDto">修改件历史信息类</param>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.DeleteEmailHistoryInfo(System.Int32)">
+            <summary>
+            删除邮件历史信息
+            </summary>
+            <param name="ehID">ID</param>
+            <returns></returns>
+        </member>
+        <member name="M:FH.Host.API.Application.EmailHistory.EmailHistoryInfoService.RemoveEmailHistoryInfo(System.Int32)">
+            <summary>
+            彻底删除邮件历史信息
+            </summary>
+            <param name="ehID">ID</param>
+            <returns></returns>
+        </member>
         <member name="T:FH.Host.API.Application.GuidePagesMenu.GuidePagesMenuInfoService">
             <summary>
             引导页菜单服务

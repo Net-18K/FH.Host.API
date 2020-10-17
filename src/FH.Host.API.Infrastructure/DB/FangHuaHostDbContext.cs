@@ -128,5 +128,7 @@ namespace FH.Host.API.Infrastructure.DB
         public DbSet<FH_GuidePagesMenuInfo> FH_GuidePagesMenuInfo { get; set; }
 
         public DbSet<FH_CopywritingInfo> FH_CopywritingInfo { get; set; }
+
+        public DbSet<FH_EmailHistoryInfo> FH_EmailHistoryInfo { get; set; }
     }
 }

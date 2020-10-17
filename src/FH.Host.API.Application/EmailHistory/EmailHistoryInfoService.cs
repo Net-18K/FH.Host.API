@@ -5,7 +5,6 @@ using FH.Host.API.Infrastructure.Model;
 using FH.Host.API.Infrastructure.SqlSugar;
 using FH.Host.API.Model.ModelEntity;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
@@ -17,9 +16,9 @@ namespace FH.Host.API.Application.EmailHistory
     /// <summary>
     /// 邮件历史信息服务
     /// </summary>
+    [ApiExplorerSettings(GroupName = "FH.Host.App.API")]
     [Route("api/EmailHistoryInfo")]
     [ApiController]
-    [EnableCors("CustomCorsPolicy")]
     [Authorize]
     public class EmailHistoryInfoService
     {
