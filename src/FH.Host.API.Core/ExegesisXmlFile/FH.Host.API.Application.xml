@@ -23,6 +23,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:FH.Host.API.Application.BackGroundImage.BackGroundImageInfoService">
+            <summary>
+            背景图片服务
+            </summary>
+        </member>
+        <member name="M:FH.Host.API.Application.BackGroundImage.BackGroundImageInfoService.GetAllBackGroundImageInfo">
+            <summary>
+            得到所有背景图片信息
+            </summary>
+            <returns></returns>
+        </member>
         <member name="T:FH.Host.API.Application.Copywriting.CopywritingInfoService">
             <summary>
             文案服务

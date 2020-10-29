@@ -33,54 +33,47 @@ namespace FH.Host.API.Infrastructure.DB
                 new FH_Users { Id = 2, UserName = "Mr.Fang", UserPwd = "Fh2269..." });
 
             modelBuilder.Entity<FH_GuidePagesMenuInfo>().HasData(
-                new FH_GuidePagesMenuInfo()
-                {
-                    MenuID = 1,
-                    MenuName = "首页",
-                    MenuUrl = "https://home.fanghua.host",
-                    MenuOrder = 1
-                },
+                 new FH_GuidePagesMenuInfo()
+                 {
+                     MenuID = 1,
+                     MenuName = "Mr.Fang♥Mrs.Zhou",
+                     MenuUrl = "https://love.fanghua.host",
+                     MenuOrder = 1
+                 },
                 new FH_GuidePagesMenuInfo()
                 {
                     MenuID = 2,
-                    MenuName = "QQ",
-                    MenuUrl = "https://wpa.qq.com/msgrd?v=3&uin=2875616188&site=qq&menu=yes",
+                    MenuName = "首页",
+                    MenuUrl = "https://home.fanghua.host",
                     MenuOrder = 2
                 },
                 new FH_GuidePagesMenuInfo()
                 {
                     MenuID = 3,
-                    MenuName = "微信",
-                    MenuUrl = "https://fanghua.host/assets/images/weixin.jpg",
+                    MenuName = "QQ",
+                    MenuUrl = "https://wpa.qq.com/msgrd?v=3&uin=2875616188&site=qq&menu=yes",
                     MenuOrder = 3
                 },
-                 new FH_GuidePagesMenuInfo()
-                 {
-                     MenuID = 4,
-                     MenuName = "Mr.Fang♥Mrs.Zhou",
-                     MenuUrl = "https://fh.fanghua.host",
-                     MenuOrder = 4
-                 },
+                new FH_GuidePagesMenuInfo()
+                {
+                    MenuID = 4,
+                    MenuName = "微信",
+                    MenuUrl = "https://fanghua.host/assets/images/weixin.jpg",
+                    MenuOrder = 4
+                },
                 new FH_GuidePagesMenuInfo()
                 {
                     MenuID = 5,
-                    MenuName = "表白小工具",
-                    MenuUrl = "https://devlove.fanghua.host",
+                    MenuName = "实用小工具",
+                    MenuUrl = "https://tool.fanghua.host",
                     MenuOrder = 5
                 },
                 new FH_GuidePagesMenuInfo()
                 {
                     MenuID = 6,
-                    MenuName = "实用小工具",
-                    MenuUrl = "https://tool.fanghua.host",
-                    MenuOrder = 6
-                },
-                new FH_GuidePagesMenuInfo()
-                {
-                    MenuID = 7,
                     MenuName = "休闲小游戏",
                     MenuUrl = "https://game.fanghua.host",
-                    MenuOrder = 7
+                    MenuOrder = 6
                 });
 
             modelBuilder.Entity<FH_CopywritingInfo>().HasData(
@@ -119,6 +112,16 @@ namespace FH.Host.API.Infrastructure.DB
                     Id = 7,
                     Content = "世界上一成不变的东西，只有“任何事物都是在不断变化的”这条真理。"
                 });
+            var obsUrl = AppConfigurtaionService.Configuration["ProjectInfo:ObjstorageUrl"];
+            for (int i = 1; i < 101; i++)
+            {
+                modelBuilder.Entity<FH_BackGroundImageInfo>().HasData(
+                    new FH_BackGroundImageInfo()
+                    {
+                        BGId = i,
+                        BGUrl = obsUrl + "/assets/images/backGround/bg" + i + ".jpg"
+                    });
+            }
         }
 
         public DbSet<FH_Admin> FH_Admin { get; set; }
@@ -130,5 +133,7 @@ namespace FH.Host.API.Infrastructure.DB
         public DbSet<FH_CopywritingInfo> FH_CopywritingInfo { get; set; }
 
         public DbSet<FH_EmailHistoryInfo> FH_EmailHistoryInfo { get; set; }
+
+        public DbSet<FH_BackGroundImageInfo> FH_BackGroundImageInfo { get; set; }
     }
 }
